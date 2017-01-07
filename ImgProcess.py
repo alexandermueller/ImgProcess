@@ -55,7 +55,7 @@ def main(argc, argv):
 
 			message = '%s\n%s%s' % (message, ' ' * indents, notice)
 
-			print '\n%s%s\n' % (prefix, message)
+			print '\n%s%s%s' % (prefix, message, '\n' if notice != '' else '')
 		else: 
 			pass
 
