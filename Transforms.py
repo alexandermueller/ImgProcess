@@ -42,3 +42,20 @@ def convolute(inputFile, method):
 	outFile = '%s_%s.png' % (inputFile.split('_')[0], method)
 
 	outImage.save('%s/%s' % (OUTPUTS_PATH, outFile))
+
+def threshold(inputFile, value):
+	directory     = INPUTS_PATH
+	sourceFile    = Image.open('%s/%s' % (directory, inputFile)) if fileExists(inputFile, directory, True) else False
+	width, height = sourceFile.size
+	rawFile 	  = list(sourceFile.getdata())
+
+	for i in xrange(len(rawFile)):
+			rawFile[i] = 255 if rawFile[i] >= int(value) else 0
+
+	outImage = Image.new('L', (width, height))
+	
+	outImage.putdata(rawFile)
+
+	outFile = '%s_threshold_%s.png' % (inputFile.split('_')[0], value)
+
+	outImage.save('%s/%s' % (OUTPUTS_PATH, outFile))	

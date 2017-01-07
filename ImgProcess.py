@@ -45,12 +45,12 @@ def main(argc, argv):
 				notice  = 'A mask file must have exactly 3 rows of 3 terms, such as the following valid mask:\n\n -1/3 100 1\n  100 0.1 1\n -1.4 123 1'
 			elif issue == 'Input':
 				notice      = 'The following is a valid call: ./ImgProcess.py whale_source.png convolute blur\n%sThe commands and arguments available are as follows:' % (' ' * indents)
-				commands    = COMMANDS.keys()
+				commands    = DEBUG_COMMANDS.keys()
 				commandLens = [len(c) for c in commands]
 				difference  = max(commandLens) - min(commandLens)
 
-				for command in COMMANDS.keys():
-					arguments = ', '.join(COMMANDS[command])
+				for command in commands:
+					arguments = ', '.join(DEBUG_COMMANDS[command])
 					notice = '%s\n%s-> %s%s: %s' % (notice, ' ' * indents, ' ' * difference if max(commandLens) - len(command) > 0 else '', command, arguments if len(arguments) else '(requires no argument)')
 
 			message = '%s\n%s%s' % (message, ' ' * indents, notice)
