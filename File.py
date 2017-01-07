@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-from os import walk
+from os import walk, path
+from PIL import Image
 
 def getFilesInDir(directory = '', const = False):
 	for (root, dirnames, filenames) in walk(directory):
@@ -28,3 +29,9 @@ def fileGetLines(filename = '', directory = ''):
 		f.close()
 	
 	return list(lines)
+
+def saveImage(filename = '', directory = '', data = [], width = 0, height = 0):
+	outImage = Image.new('L', (width, height))
+	
+	outImage.putdata(data)
+	outImage.save('%s/%s' % (directory, filename))

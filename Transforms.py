@@ -3,7 +3,7 @@
 from Constants import *
 from Mask import Mask
 from PIL import Image, ImageDraw
-from File import fileExists
+from File import fileExists, saveImage
 
 def snip(data, xStart, xEnd, yStart, yEnd):
 	length = xEnd - xStart + 1
@@ -33,15 +33,11 @@ def convolute(inputFile, method):
 		for j in xrange(width):
 			pixels[i][j] = mask.apply(snip(data, j - 1, j + 1, i - 1, i + 1))		
 
-	output = [int(max(0, min(item, 255))) for sublist in pixels for item in sublist]
-	
-	outImage = Image.new('L', (width, height))
-	
-	outImage.putdata(output)
-
+	output  = [int(max(0, min(item, 255))) for sublist in pixels for item in sublist]	
 	outFile = '%s_%s.png' % (inputFile.split('_')[0], method)
 
-	outImage.save('%s/%s' % (OUTPUTS_PATH, outFile))
+	saveImage(outFile, OUTPUTS_PATH, output, width, height)
+
 
 def threshold(inputFile, value):
 	directory     = INPUTS_PATH
@@ -52,10 +48,6 @@ def threshold(inputFile, value):
 	for i in xrange(len(rawFile)):
 			rawFile[i] = 255 if rawFile[i] >= int(value) else 0
 
-	outImage = Image.new('L', (width, height))
-	
-	outImage.putdata(rawFile)
-
 	outFile = '%s_threshold_%s.png' % (inputFile.split('_')[0], value)
-
-	outImage.save('%s/%s' % (OUTPUTS_PATH, outFile))
+	
+	saveImage(outFile, OUTPUTS_PATH, rawFile, width, height)
