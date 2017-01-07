@@ -28,3 +28,4 @@ def fileGetLines(filename = '', directory = ''):
 		f.close()
 	
 	return list(lines)
+	
