@@ -58,5 +58,4 @@ def threshold(inputFile, value):
 
 	outFile = '%s_threshold_%s.png' % (inputFile.split('_')[0], value)
 
-	outImage.save('%s/%s' % (OUTPUTS_PATH, outFile))	
-	
+	outImage.save('%s/%s' % (OUTPUTS_PATH, outFile))
