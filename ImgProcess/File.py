@@ -1,19 +1,20 @@
 #!/usr/bin/env python
 
-from os import walk, path
 from PIL import Image
+from os import walk, path
+from Error import ImgProcessException
 
-def getFilesInDir(directory = '', const = False):
+def fetchItemsFromDir(directory = '', const = False):
     for (root, dirnames, filenames) in walk(directory):
-        return list(filenames)
+        return {'files' : list(filenames), 'folders' : list(dirnames)}
 
     if not const:
-        raise Exception('File', 'The directory "%s" does not exist.' % (directory))
+        raise ImgProcessException('File', 'The directory "%s" does not exist.' % (directory))
 
 def fileExists(filename = '', directory = '', exception = False):
-    if not filename in getFilesInDir(directory):    
+    if not filename in fetchItemsFromDir(directory)['files']:    
         if exception:
-            raise Exception('File', 'The file "%s" does not exist at "%s/%s".' % (filename, directory, filename)) 
+            raise ImgProcessException('File', 'The file "%s" does not exist at "%s/%s".' % (filename, directory, filename)) 
         
         return False
     

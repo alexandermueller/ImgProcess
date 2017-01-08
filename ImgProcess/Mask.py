@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import sys
-from Constants import *
+from Constants import MASKS_PATH
+from Error import ImgProcessException
 from File import fileExists, fileGetLines
 
 def extractMask(name = ''):
@@ -25,13 +26,13 @@ def extractMask(name = ''):
                         else:
                             term = float(term)
                     except ValueError:
-                        raise Exception('Mask', 'Term %d in row %d of mask "%s" is not formatted correctly.' % (j + 1, i + 1, name))
+                        raise ImgProcessException('Mask', 'Term %d in row %d of mask "%s" is not formatted correctly.' % (j + 1, i + 1, name))
                     
                     maskArray[i][j] = term
             else:
-                raise Exception('Mask', 'The "%s" mask does not have 3 terms in row %d.' % (name, i + 1))
+                raise ImgProcessException('Mask', 'The "%s" mask does not have 3 terms in row %d.' % (name, i + 1))
     else: 
-        raise Exception('Mask', 'The "%s" mask does not have exactly 3 rows.' % (name))
+        raise ImgProcessException('Mask', 'The "%s" mask does not have exactly 3 rows.' % (name))
 
     return list(maskArray) 
 

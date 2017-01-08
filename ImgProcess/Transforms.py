@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from Constants import *
 from Mask import Mask
 from PIL import Image
 from File import saveImage, getRawImageData
+from Constants import INPUTS_PATH, OUTPUTS_PATH
 
 def snip(data, xStart, xEnd, yStart, yEnd):
     length  = xEnd - xStart + 1
@@ -46,14 +46,12 @@ def threshold(inputFile, value):
 
     saveImage(outFile, OUTPUTS_PATH, rawFile, width, height)
 
-def noiseRemoval(inputFile, method):
-    width, height, rawFile = getRawImageData(inputFile, INPUTS_PATH)
-
-    additiveData = list()
+def noiseRemoval(inputFile, method, sourceDir = INPUTS_PATH, destinationDir = OUTPUTS_PATH, postFix = ''):
+    width, height, rawFile = getRawImageData(inputFile, sourceDir)
     output       = list()
 
     if method == 'additive':
-        w, h, additiveData = getRawImageData('calibration.png', INPUTS_PATH)
+        w, h, additiveData = getRawImageData('calibration%s.png' % (postFix), sourceDir)
 
         for i in xrange(len(rawFile)):
             output.append(rawFile[i] - additiveData[i] + 128)
@@ -69,7 +67,7 @@ def noiseRemoval(inputFile, method):
 
         output  = [int(max(0, min(item, 255))) for sublist in pixels for item in sublist]   
     
-    outFile = '%s_%s.png' % (inputFile.split('_')[0], method.replace('-', '_'))
+    outFile = '%s_%s%s.png' % (inputFile.split('_')[0], method.replace('-', '_'), postFix)
 
-    saveImage(outFile, OUTPUTS_PATH, output, width, height)
+    saveImage(outFile, destinationDir, output, width, height)
 
