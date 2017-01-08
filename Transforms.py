@@ -40,7 +40,7 @@ def threshold(inputFile, value):
     width, height, rawFile = getRawImageData(inputFile, INPUTS_PATH)
 
     for i in xrange(len(rawFile)):
-            rawFile[i] = 255 if rawFile[i] >= int(value) else 0
+        rawFile[i] = 255 if rawFile[i] >= int(value) else 0
 
     outFile = '%s_threshold_%s.png' % (inputFile.split('_')[0], value)
 
