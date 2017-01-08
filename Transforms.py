@@ -48,17 +48,28 @@ def threshold(inputFile, value):
 
 def noiseRemoval(inputFile, method):
     width, height, rawFile = getRawImageData(inputFile, INPUTS_PATH)
+
+    additiveData = list()
+    output       = list()
+
+    if method == 'additive':
+        w, h, additiveData = getRawImageData('calibration.png', INPUTS_PATH)
+
+        for i in xrange(len(rawFile)):
+            output.append(rawFile[i] - additiveData[i] + 128)
+    elif method == 'salt-and-pepper':
+        data   = [rawFile[i * width : (i + 1) * width] for i in xrange(height)] 
+        pixels = list(data) 
+        mask   = Mask('median')
+
+        for i in xrange(height):
+            for j in xrange(width):
+                value        = data[i][j]
+                pixels[i][j] = mask.apply(snip(data, j - 1, j + 1, i - 1, i + 1)) if value == 0 or value == 255 else value 
+
+        output  = [int(max(0, min(item, 255))) for sublist in pixels for item in sublist]   
     
-    data   = [rawFile[i * width : (i + 1) * width] for i in xrange(height)] 
-    pixels = list(data) 
-    mask   = Mask('median')
-
-    for i in xrange(height):
-        for j in xrange(width):
-            value        = data[i][j]
-            pixels[i][j] = mask.apply(snip(data, j - 1, j + 1, i - 1, i + 1)) if value == 0 or value == 255 else value 
-
-    output  = [int(max(0, min(item, 255))) for sublist in pixels for item in sublist]   
     outFile = '%s_%s.png' % (inputFile.split('_')[0], method.replace('-', '_'))
 
     saveImage(outFile, OUTPUTS_PATH, output, width, height)
+

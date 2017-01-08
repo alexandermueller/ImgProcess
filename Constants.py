@@ -17,7 +17,7 @@ ERRORS_HANDLED = ['Input', 'File', 'Mask']
 # Commands & Arguments
 
 MASKS               = [x.split('.')[0] for x in getFilesInDir(MASKS_PATH, True)] 
-NOISE_REMOVAL_TYPES = ['salt-and-pepper']
+NOISE_REMOVAL_TYPES = ['salt-and-pepper', 'additive']
 
 COMMANDS       = {'convolute' : MASKS, 'threshold' : [str(x) for x in xrange(256)], 'noise-removal' : NOISE_REMOVAL_TYPES}
 DEBUG_COMMANDS = {'convolute' : MASKS, 'threshold' : ['integer value (from 0-255, inclusive)'], 'noise-removal' : NOISE_REMOVAL_TYPES}
