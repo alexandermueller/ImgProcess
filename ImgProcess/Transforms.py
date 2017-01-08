@@ -70,4 +70,3 @@ def noiseRemoval(inputFile, method, sourceDir = INPUTS_PATH, destinationDir = OU
     outFile = '%s_%s%s.png' % (inputFile.split('_')[0], method.replace('-', '_'), postFix)
 
     saveImage(outFile, destinationDir, output, width, height)
-
