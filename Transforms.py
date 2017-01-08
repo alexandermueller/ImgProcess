@@ -55,7 +55,7 @@ def noiseRemoval(inputFile, method):
 
 	for i in xrange(height):
 		for j in xrange(width):
-			value 		 = data[i][j]
+			value		 = data[i][j]
 			pixels[i][j] = mask.apply(snip(data, j - 1, j + 1, i - 1, i + 1)) if value == 0 or value == 255 else value 
 
 	output  = [int(max(0, min(item, 255))) for sublist in pixels for item in sublist]	
