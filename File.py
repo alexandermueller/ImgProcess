@@ -35,3 +35,9 @@ def saveImage(filename = '', directory = '', data = [], width = 0, height = 0):
 	
 	outImage.putdata(data)
 	outImage.save('%s/%s' % (directory, filename))
+
+def getRawImageData(filename = '', directory = ''):
+	sourceFile    = Image.open('%s/%s' % (directory, filename)) if fileExists(filename, directory, True) else False
+	width, height = sourceFile.size
+
+	return width, height, list(sourceFile.getdata())

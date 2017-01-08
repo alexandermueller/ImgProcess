@@ -4,7 +4,6 @@
 # Alexander Mueller
 # Jan 6, 2017
 
-import os
 import sys
 from Constants import *
 import Transforms

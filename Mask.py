@@ -4,14 +4,11 @@ import sys
 from Constants import *
 from File import fileExists, fileGetLines
 
-identityMask = [[0] * 3, [0, 1, 0], [0] * 3]
-
 def extractMask(name = ''):
-	filename = '%s.txt' % (name) 
-	maskArray = list(identityMask)
+	filename  = '%s.txt' % (name) 
+	lines     = fileGetLines(filename, MASKS_PATH)
+	maskArray = [list([0] * 3) for i in xrange(3)]
 
-	lines = fileGetLines(filename, MASKS_PATH)
-		
 	if len(lines) == 3:
 		for i in xrange(3):
 			line  = lines[i]
