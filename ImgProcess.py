@@ -50,7 +50,7 @@ def main(argc, argv):
 
                 for command in commands:
                     arguments = ', '.join(DEBUG_COMMANDS[command])
-                    notice = '%s\n%s-> %s%s: %s' % (notice, ' ' * indents, ' ' * difference if max(commandLens) - len(command) > 0 else '', command, arguments if len(arguments) else '(requires no argument)')
+                    notice    = '%s\n%s-> %s%s: %s' % (notice, ' ' * indents, ' ' * difference if max(commandLens) - len(command) > 0 else '', command, arguments if len(arguments) else '(requires no argument)')
 
             message = '%s\n%s%s' % (message, ' ' * indents, notice)
 
