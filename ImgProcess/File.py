@@ -4,14 +4,14 @@ from PIL import Image
 from os import walk, path
 from Error import ImgProcessException
 
-def fetchItemsFromDir(directory = '', const = False):
+def fetchItemsFromDir(directory, const = False):
     for (root, dirnames, filenames) in walk(directory):
         return {'files' : list(filenames), 'folders' : list(dirnames)}
 
     if not const:
         raise ImgProcessException('File', 'The directory "%s" does not exist.' % (directory))
 
-def fileExists(filename = '', directory = '', exception = False):
+def fileExists(filename, directory, exception = False):
     if not filename in fetchItemsFromDir(directory)['files']:    
         if exception:
             raise ImgProcessException('File', 'The file "%s" does not exist at "%s/%s".' % (filename, directory, filename)) 
@@ -20,7 +20,7 @@ def fileExists(filename = '', directory = '', exception = False):
     
     return True
 
-def fileGetLines(filename = '', directory = ''):        
+def fileGetLines(filename, directory):        
     lines = list()
 
     if fileExists(filename, directory, True):
@@ -31,13 +31,13 @@ def fileGetLines(filename = '', directory = ''):
     
     return list(lines)
 
-def saveImage(filename = '', directory = '', data = [], width = 0, height = 0):
+def saveImage(filename, directory, data, width, height):
     outImage = Image.new('L', (width, height))
     
     outImage.putdata(data)
     outImage.save('%s/%s' % (directory, filename))
 
-def getRawImageData(filename = '', directory = ''):
+def getRawImageData(filename, directory):
     sourceFile    = Image.open('%s/%s' % (directory, filename)) if fileExists(filename, directory, True) else False
     width, height = sourceFile.size
 

@@ -5,28 +5,11 @@
 # Jan 7, 2017
 
 import sys
+from Helpers import similar
 from Transforms import noiseRemoval
 from Error import ImgProcessException, handle
 from File import fetchItemsFromDir, getRawImageData 
 from Constants import INPUTS_PATH_TEST, OUTPUTS_PATH_TEST, EXPECTED_PATH_TEST
-
-## similar:
-# The upper bound was calculated by dividing the difference
-# between the source and processed file in part 5 by the
-# amount of pixels in the source image. In order for an
-# image to be similar, the difference divided by the pixel
-# count of any file must be less than or equal to that
-# upper bound.
-##
-
-def similar(a = [], b = [], upperBound = 0.5):
-    diff   = 0
-    length = len(a)
-
-    for i in xrange(length):
-        diff += abs(a[i] - b[i])
-
-    return diff <= upperBound * length
 
 def main(argc, argv):
     try :
@@ -53,16 +36,14 @@ def main(argc, argv):
             comparison = 'match' if similar(expected, output) else 'mismatch' 
             testResult = 'Passed' if comparison == status else 'Failed'
             passed    += 1 if testResult == 'Passed' else 0
-            paddingExp = ' ' * diff if len(status) < maxLen else ''
-            paddingFnd = ' ' * diff if len(comparison) < maxLen else ''
+
+            paddingExp, paddingFnd = [' ' * diff if len(x) < maxLen else '' for x in [status, comparison]]
 
             print '-> Test %s: %s | Expected: %s%s | Found: %s%s' % (testNum, testResult, paddingExp, status.capitalize(), paddingFnd, comparison.capitalize())
             
         print '\nFinished. (%d/%d) Tests Passed.\n' % (passed, total)
-    except ImgProcessException as error:
-        handle(error)
-        
-        if not handled:
+    except ImgProcessException as error:    
+        if not handle(error):
             pass
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ from Constants import MASKS_PATH
 from Error import ImgProcessException
 from File import fileExists, fileGetLines
 
-def extractMask(name = ''):
+def extractMask(name):
     filename  = '%s.txt' % (name) 
     lines     = fileGetLines(filename, MASKS_PATH)
     maskArray = [list([0] * 3) for i in xrange(3)]
@@ -41,7 +41,7 @@ class Mask:
         self.name   = name
         self.matrix = extractMask(name) if len(maskMatrix) == 0 else list(maskMatrix)
 
-    def apply(self, snippet = list()):
+    def apply(self, snippet):
         value = 0
         
         if len(snippet) != 3 or len(snippet[0]) != 3 or len(self.matrix) != 3 or len(self.matrix[0]) != 3:

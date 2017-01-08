@@ -34,9 +34,7 @@ def main(argc, argv):
         else:
             raise ImgProcessException('Input', 'Incorrect call format. Correct format: ./ImgProcess.py <input file name>.<file extension> <command> <argument>')
     except ImgProcessException as error:
-        handled = handle(error)
-        
-        if not handled:
+        if not handle(error):
             pass
 
 if __name__ == "__main__":
