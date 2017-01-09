@@ -34,7 +34,8 @@ def threshold(inputFile, value):
 
 def noiseRemoval(inputFile, method, sourceDir = INPUTS_PATH, destinationDir = OUTPUTS_PATH, postFix = ''):
     width, height, rawFile = getRawImageData(inputFile, sourceDir)
-    output       = list()
+    
+    output = list()
 
     if method == 'additive':
         w, h, additiveData = getRawImageData('calibration%s.png' % (postFix), sourceDir)
